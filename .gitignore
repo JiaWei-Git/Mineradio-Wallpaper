@@ -1,0 +1,7 @@
+/release/
+/test-output/
+/.tmp/
+*.backup-*
+*.removed-*
+Thumbs.db
+Desktop.ini

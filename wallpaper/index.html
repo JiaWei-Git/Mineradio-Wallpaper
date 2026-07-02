@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+  <title>Mineradio 原版视觉</title>
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/stage.css">
+</head>
+<body>
+  <main id="wallpaper-stage" aria-hidden="true">
+    <div id="void-background-image"></div>
+    <video id="void-background-video" muted loop playsinline></video>
+    <canvas id="stage-canvas"></canvas>
+    <div id="fallback-message" hidden>WebGL unavailable</div>
+  </main>
+  <script src="vendor/three.r128.min.js"></script>
+  <script src="js/properties.js"></script>
+  <script src="js/operation-log.js"></script>
+  <script src="js/media-history.js"></script>
+  <script src="js/lyrics-engine.js"></script>
+  <script src="js/audio-reactor.js"></script>
+  <script src="js/visual-state.js"></script>
+  <script src="js/visual-core.js"></script>
+  <script src="js/lyrics-visual.js"></script>
+  <script src="js/we-adapter.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

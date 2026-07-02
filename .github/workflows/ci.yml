@@ -1,0 +1,61 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  core:
+    name: Windows core and installer
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: JavaScript syntax
+        shell: pwsh
+        run: |
+          Get-ChildItem wallpaper/js -Filter *.js | ForEach-Object { node --check $_.FullName }
+          Get-ChildItem tests -Filter *.js | ForEach-Object { node --check $_.FullName }
+
+      - name: Wallpaper regression
+        shell: pwsh
+        run: node tests/regression.test.js
+
+      - name: Project JSON
+        shell: pwsh
+        run: node -e "JSON.parse(require('fs').readFileSync('wallpaper/project.json','utf8'))"
+
+      - name: Release installer sandbox
+        shell: pwsh
+        run: powershell -ExecutionPolicy Bypass -File tests/release-installer.test.ps1
+
+      - name: Release package verification
+        shell: pwsh
+        run: powershell -ExecutionPolicy Bypass -File scripts/build-release.ps1 -VerifyOnly
+
+  provider-smoke:
+    name: Live lyrics providers
+    needs: core
+    runs-on: windows-latest
+    timeout-minutes: 8
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: NetEase and LRCLIB read-only probe
+        shell: pwsh
+        run: node tests/live-lyrics-check.js

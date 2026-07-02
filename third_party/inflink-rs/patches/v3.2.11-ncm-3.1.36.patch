@@ -1,0 +1,24 @@
+diff --git a/packages/frontend/manifest.json b/packages/frontend/manifest.json
+index 8b570f5..6a55419 100644
+--- a/packages/frontend/manifest.json
++++ b/packages/frontend/manifest.json
+@@ -20,10 +20,18 @@
+ 			"orpheus://orpheus/pub/hybrid/vendors~app~subApp.chunk": [
+ 				{
+ 					"type": "regex",
+-					"id": "inflink-disable-native-smtc",
++					"id": "inflink-disable-native-smtc-old",
+ 					"from": "(setSMTCEnable\\s*\\([^)]*\\)\\s*\\{)",
+ 					"to": "$1 /* This method has been patched by InfLink-rs to disable native SMTC. */ return Promise.resolve();"
+ 				}
++			],
++			"orpheus://orpheus/pub/hybrid/app.chunk": [
++				{
++					"type": "regex",
++					"id": "inflink-disable-native-smtc-new",
++					"from": "(setSMTCEnable\\s*\\([^)]*\\)\\s*\\{)",
++					"to": "$1 /* This method has been patched by InfLink-rs to disable native SMTC. */ return Promise.resolve();"
++				}
+ 			]
+ 		}
+ 	},

@@ -1,0 +1,58 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  validate-and-release:
+    name: Validate and publish GitHub Release
+    runs-on: windows-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Require v1.0.0
+        shell: pwsh
+        run: |
+          if ('${{ github.ref_name }}' -ne 'v1.0.0') {
+            throw 'This release workflow is pinned to v1.0.0.'
+          }
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Validate source
+        shell: pwsh
+        run: |
+          Get-ChildItem wallpaper/js -Filter *.js | ForEach-Object { node --check $_.FullName }
+          node tests/regression.test.js
+          node -e "JSON.parse(require('fs').readFileSync('wallpaper/project.json','utf8'))"
+          powershell -ExecutionPolicy Bypass -File tests/release-installer.test.ps1
+
+      - name: Live lyrics provider probe
+        shell: pwsh
+        run: node tests/live-lyrics-check.js
+
+      - name: Build and verify release asset
+        shell: pwsh
+        run: powershell -ExecutionPolicy Bypass -File scripts/build-release.ps1
+
+      - name: Publish v1.0.0
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create '${{ github.ref_name }}' `
+            'release/Mineradio-Wallpaper-v1.0.0.zip' `
+            'release/SHA256SUMS.txt' `
+            --verify-tag `
+            --title 'Mineradio Wallpaper 发布版 1.0' `
+            --notes-file RELEASE_NOTES.md
