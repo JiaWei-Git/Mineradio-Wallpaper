@@ -25,6 +25,7 @@
 - 完整安装模式固定 BetterNCM Installer 1.2.0 官方地址和 SHA-256；InfLink-rs 覆盖前备份、复制后校验，并要求用户输入 `INSTALL` 同意未签名 DLL 风险。
 - InfLink-rs v3.2.11 修订包附带完整对应源码、可应用补丁、GPL 许可证、原包/修订包哈希；经逐项比较只有 `manifest.json` 与官方原包不同。
 - GitHub Release 构建会把最终 ZIP 解压到临时目录，逐项校验壁纸、插件、源码包和发布清单。
+- 公开仓库为 `https://github.com/JiaWei-Git/Mineradio-Wallpaper`；首次 `main` 云端 CI 已通过核心、安装器和联网取词作业。
 
 ## 关键外部状态
 
