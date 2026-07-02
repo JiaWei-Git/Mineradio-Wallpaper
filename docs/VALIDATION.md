@@ -14,7 +14,7 @@
 
 本地已通过：JavaScript 与 PowerShell 语法、`tests/regression.test.js`、`project.json`、`tests/release-installer.test.ps1`、`scripts/build-release.ps1 -VerifyOnly`。当前 `wallpaper/` 为 18 个文件、3,819,221 bytes；默认启动载荷 871,294 bytes。实际 Release ZIP 为 5,727,477 bytes，本地构建 SHA-256 为 `55401EE638882D587247D3C21E5762975131535A8CC3A85CD2B931416A99A8B7`；构建清单包含 UTC 时间，因此云端产物哈希可不同，必须以同一 Release 附带的 `SHA256SUMS.txt` 为准。
 
-本地联网探针因 Codex 执行额度限制未能在本轮重跑，未绕过限制。首次 GitHub Actions 云端验证已于 2026-07-02 通过：[CI run 28576113413](https://github.com/JiaWei-Git/Mineradio-Wallpaper/actions/runs/28576113413)。`Windows core and installer` 作业中的语法、回归、JSON、安装器沙盒和 Release 解压校验全部成功；`Live lyrics providers` 作业中的网易云与 LRCLIB 只读联网探针成功。对应提交为 `48978623afa48d76b572f65b56cac18a294b90e9`。
+本地联网探针因 Codex 执行额度限制未能在本轮重跑，未绕过限制。最终 GitHub Actions 云端验证已于 2026-07-02 通过：[CI run 28576519046](https://github.com/JiaWei-Git/Mineradio-Wallpaper/actions/runs/28576519046)。`Windows core and installer` 作业中的语法、回归、JSON、安装器沙盒和 Release 解压校验全部成功；`Live lyrics providers` 作业中的网易云与 LRCLIB 只读联网探针成功。对应提交为 `0a793a0802ddbf2d23c2274147cf718855af4d68`。工作流已使用 `actions/checkout@v7` 与 `actions/setup-node@v6`，两个作业均无检查注释或 Node 20 弃用告警。
 
 云端没有 Steam、Wallpaper Engine 和网易云客户端，只能验证源码、安装器沙盒、联网取词与 Release 完整性，不能替代此前已通过的 WPE CEF 图形回归和真实桌面 SMTC 日志。
 
